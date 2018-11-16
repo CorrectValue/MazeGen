@@ -12,14 +12,24 @@ vector<String> Bot::validNames;
 Bot::Bot()
 {
 	//подготовить
-	
+
 	//рандомится внешний вид бота:	
 	//
-	
+
+	if (validFiles.size() == 0)
+	{
+		//много ботов, картинок на всех не хватает
+		Bot::prepareSkins();
+	}
 	int randNum = rand() % validFiles.size();
 	tileset = "Images/BotTilesets/" + validFiles[randNum];
 	validFiles.erase(validFiles.begin() + randNum);
 
+	if (validNames.size() == 0)
+	{
+		//много ботов, имён всем не хватает
+		Bot::prepareNames();
+	}
 	randNum = rand() % validNames.size();
 	name = validNames[randNum];
 	validNames.erase(validNames.begin() + randNum);
@@ -54,7 +64,7 @@ void Bot::generatePosition()
 	Ycenter = Y + h / 2;
 }
 
-void Bot::respawn(Maze mz)
+void Bot::respawn(Maze &mz)
 {
 	alive = true;
 	generatePosition();
@@ -63,7 +73,7 @@ void Bot::respawn(Maze mz)
 	sprite.setPosition(x*w, y*h);
 }
 
-void Bot::update(float time, Maze mz)
+void Bot::update(float time, Maze &mz)
 {
 	if (alive)
 	{
@@ -195,7 +205,7 @@ void Bot::die()
 	deaths++;
 }
 
-void Bot::prepareValidCellsList(Maze mz)
+void Bot::prepareValidCellsList(Maze &mz)
 {
 	//пробегаем весь лабиринт и запихуиваем в список все пустые клетки
 	for (int i = 0; i < mz.height; i++)
@@ -258,7 +268,7 @@ void Bot::prepareNames()
 }
 
 
-void Bot::navigate(Maze mz)
+void Bot::navigate(Maze &mz)
 {
 	//осуществляет нафигацию бота по лабиринту
 	//пока не развилка - идём куда-то
@@ -321,7 +331,7 @@ void Bot::navigate(Maze mz)
 
 }
 
-void Bot::mazeInteraction(Maze mz)
+void Bot::mazeInteraction(Maze &mz)
 {
 	for (int i = Y / 16; i < (Y + h) / 16; i++)
 	{

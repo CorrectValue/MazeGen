@@ -48,15 +48,15 @@ public:
 	bool alive;
 
 	Bot();
-	void mazeInteraction(Maze mz);
-	void respawn(Maze mz); //респавн бота в случайной точке карты
+	void mazeInteraction(Maze &mz);
+	void respawn(Maze &mz); //респавн бота в случайной точке карты
 
 	void generatePosition();
-	void update(float time, Maze mz);
+	void update(float time, Maze &mz);
 	void eat();
 	void die();
-	void navigate(Maze mz);
-	static void prepareValidCellsList(Maze mz);
+	void navigate(Maze &mz);
+	static void prepareValidCellsList(Maze &mz);
 	static void prepareSkins();
 	static void prepareNames();
 
